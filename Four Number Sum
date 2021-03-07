@@ -1,0 +1,27 @@
+function fourNumberSum(array, targetSum) {
+  /*
+		sort the array, create nested loops,
+		compare if the sum is larger of lesser than the target
+	*/
+	array.sort((a, b) => a - b);
+	let quadruplets = [];
+	for (let i = 0; i < array.length - 3; i ++) {
+		for (let j = i + 1; j < array.length - 2; j ++) {
+			let left = j + 1;
+			let right = array.length - 1;
+			while (left < right) {
+			let currentSum = array[i] + array[j] + array[left] + array[right];
+			if (currentSum > targetSum) {
+				right --;
+			} else if (currentSum < targetSum) {
+				left ++;
+			} else {
+				quadruplets.push([array[i], array[j], array[left], array[right]]);
+				right --;
+				left ++;
+			}
+			}
+		}
+	}
+	return quadruplets;
+}

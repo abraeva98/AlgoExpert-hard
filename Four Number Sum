@@ -1,3 +1,30 @@
+// O(N^2) - time, space
+
+function fourNumberSum(array, targetSum) {
+	let hashMap = new Map();
+	let quadruplets = [];
+	for (let i = 1; i < array.length - 1; i ++) {
+		for (let j = i + 1; j < array.length; j ++) {
+			let difference = targetSum - (array[i] + array[j]);
+			if (hashMap.has(difference)) {
+				for (const pair of hashMap.get(difference)) {
+					quadruplets.push(pair.concat([array[i], array[j]]));
+				}
+			}
+		}
+		for (let k = 0; k < i; k ++) {
+			let sum = array[i] + array[k];
+			if (hashMap.has(sum)) {
+				hashMap.set(sum, [...hashMap.get(sum), [array[i], array[k]]]);
+			} else {
+				hashMap.set(sum, [[array[i], array[k]]]);
+			}
+		}
+	}
+	return quadruplets;
+}
+
+
 function fourNumberSum(array, targetSum) {
   /*
 		sort the array, create nested loops,

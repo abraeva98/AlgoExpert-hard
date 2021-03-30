@@ -1,4 +1,4 @@
-// O(NM) - time, space
+// O(NM*min(n, m)) - time, space
 
 function longestCommonSubsequence(str1, str2) {
 	/*

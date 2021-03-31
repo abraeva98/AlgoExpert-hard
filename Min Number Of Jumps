@@ -1,0 +1,15 @@
+// O(N^2) - time, O(N) - space
+
+function minNumberOfJumps(array) {
+	let n = array.length;
+	let dp = new Array(n).fill(Infinity);
+	dp[0] = 0;
+	for (let i = 0; i < array.length; i ++) {
+		for (let j = 0; j < i; j ++) {
+			if (array[j] + j >= i) {
+				dp[i] = Math.min(dp[i], dp[j] + 1);
+			}
+		}
+	}
+	return dp[n - 1];
+}

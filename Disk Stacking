@@ -1,0 +1,31 @@
+// O(N^2) - time
+   O(N) - space
+
+function diskStacking(disks) {
+	disks.sort((a, b) => a[2] - b[2]);
+	let maxHeights = new Array(disks.length);
+	for (let i = 0; i < disks.length; i ++) maxHeights[i] = disks[i][2];
+	let sequence = new Array(disks.length);
+	let maxIdx = 0;
+	
+	for (let i = 1; i < disks.length; i ++) {
+		let topDisk = disks[i];
+		for (let j = 0; j < i; j ++) {
+			let lowerDisk = disks[j];
+			if (lowerDisk[0] < topDisk[0] && lowerDisk[1] < topDisk[1] && lowerDisk[2] < topDisk[2]) {
+				if (maxHeights[i] < maxHeights[j] + topDisk[2]) {
+					maxHeights[i] = maxHeights[j] + topDisk[2];
+					sequence[i] = j;
+				}
+			}
+		}
+		if (maxHeights[i] >= maxHeights[maxIdx]) maxIdx = i;
+	}
+
+	let res = [];
+	while (maxIdx !== undefined) {
+		res.unshift(disks[maxIdx]);
+		maxIdx = sequence[maxIdx];
+	}
+	return res;
+}

@@ -1,27 +1,27 @@
 // O(N^2) - time, space
 
 function fourNumberSum(array, targetSum) {
-	let hashMap = new Map();
-	let quadruplets = [];
-	for (let i = 1; i < array.length - 1; i ++) {
-		for (let j = i + 1; j < array.length; j ++) {
-			let difference = targetSum - (array[i] + array[j]);
-			if (hashMap.has(difference)) {
-				for (const pair of hashMap.get(difference)) {
-					quadruplets.push(pair.concat([array[i], array[j]]));
+  // Write your code here.
+	let twoSum = new Map();
+	let n = array.length;
+	let res = [];
+	for(let i = 1; i < n - 1; i ++) {
+		for(let j = i + 1; j < n; j ++) {
+			let curSum = array[i] + array[j];
+			let dif = targetSum - curSum;
+			if(twoSum.has(dif)) {
+				for(let pair of twoSum.get(dif)) {
+					res.push(pair.concat([array[i], array[j]]));
 				}
 			}
 		}
-		for (let k = 0; k < i; k ++) {
+		for(let k = 0; k < i; k ++) {
 			let sum = array[i] + array[k];
-			if (hashMap.has(sum)) {
-				hashMap.set(sum, [...hashMap.get(sum), [array[i], array[k]]]);
-			} else {
-				hashMap.set(sum, [[array[i], array[k]]]);
-			}
+			if(!twoSum.has(sum)) twoSum.set(sum, []);
+			twoSum.get(sum).push([array[i], array[k]]);
 		}
 	}
-	return quadruplets;
+	return res;
 }
 
 

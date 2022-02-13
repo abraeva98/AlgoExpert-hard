@@ -1,0 +1,31 @@
+function largestRange(array) {
+  // Write your code here.
+	let allNums = new Map();
+	let curRange = 0;
+	let maxRange = 0;
+	let min = Infinity;
+	let max = -Infinity;
+	
+	for(let num of array) {
+		min = Math.min(num, min);
+		max = Math.max(num, max);
+		allNums.set(num, false);
+	}
+	
+	let idx = [min, max];
+	for(let num = min; num <= max + 1; num ++) {
+		if(allNums.get(num)) continue;
+		if(allNums.has(num)) {
+			allNums.set(num, true);
+			curRange ++;
+		} else {
+			if(curRange > maxRange) {
+				idx[0] = num - curRange;
+				idx[1] = num - 1;
+			  maxRange = curRange;
+			}
+			curRange = 0;
+	}
+	}
+	return idx;
+ }

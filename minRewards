@@ -1,0 +1,24 @@
+function minRewards(scores) {
+  // Write your code here.
+	let minScores = [];
+	let rewards = new Array(scores.length).fill(1);
+	
+	for(let i = 0; i < scores.length; i++) {
+		let left = scores[i - 1] || Infinity;
+		let right = scores[i + 1] || Infinity;
+		if(scores[i] < left && scores[i] < right) minScores.push(i);
+	}
+	for(let idx of minScores) {
+		let left = idx - 1;
+		while(left >= 0 && scores[left] > scores[left + 1]) {
+			rewards[left] = Math.max(rewards[left], rewards[left + 1] + 1);
+			left --;
+		}
+		let right = idx + 1;
+		while(idx < scores.length && scores[right] > scores[right - 1]) {
+			rewards[right] = Math.max(rewards[right], rewards[right - 1] + 1);
+			right ++;
+		}
+	}	
+	return rewards.reduce((acc, el) => acc + el);
+}

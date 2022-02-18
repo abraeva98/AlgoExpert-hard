@@ -1,3 +1,43 @@
+function apartmentHunting(blocks, reqs) {
+  // Write your code here.
+	let map = new Map();
+	for(let req of reqs) {
+		map.set(req, findMinDistance(blocks, req));
+	}
+	
+	let idx = -1;
+	let minDist = Infinity;
+	for(let i = 0; i < blocks.length; i ++) {
+		let maxDist = -Infinity;
+		for(let req of reqs) {
+			maxDist = Math.max(map.get(req)[i], maxDist);
+		}
+		if(minDist > maxDist) {
+			minDist = maxDist;
+			idx = i;
+		}
+	}
+	
+	return idx;
+}
+
+function findMinDistance(blocks, req) {
+	let n = new Array(blocks.length);
+	let leftIdx = Infinity;
+	for(let i = 0; i < blocks.length; i ++) {
+		if(blocks[i][req]) leftIdx = i;
+		n[i] = Math.abs(i - leftIdx);
+	}
+	
+	let rightIdx = Infinity;
+	for(let i = blocks.length - 1; i >= 0; i --) {
+		if(blocks[i][req]) rightIdx = i;
+		n[i] = Math.min(n[i], Math.abs(i - rightIdx));
+	}
+	return n;
+}
+
+
 function apartmentHunting( street, requirements ) {
 	let n = street.length;
   let seen = new Map();

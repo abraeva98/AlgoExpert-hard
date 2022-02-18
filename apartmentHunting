@@ -1,0 +1,36 @@
+function apartmentHunting( street, requirements ) {
+	let n = street.length;
+  let seen = new Map();
+
+	for(let i = 0; i < n; i ++) {
+      let block = street[i];
+      for(let req of requirements) {
+					if(block[req]) {
+						if(!seen.has(req)) seen.set(req, []);
+						seen.get(req).push(i);
+					} 
+      };
+};
+	
+let minDistance = Infinity;
+let index = -1;
+	for(let i = 0; i < n; i ++) {
+		let block = street[i];
+		let distance = -Infinity;		
+		for(let req of requirements) {
+			let available = seen.get(req);
+			let diff = Infinity;
+			for(let idx of available) {
+				diff = Math.min(Math.abs(i - idx), diff);
+			}
+			distance = Math.max(diff, distance);
+		}
+
+		if(minDistance > distance) {
+			 minDistance = distance;
+			 index = i;
+		}
+	}
+	
+  return index;
+};
